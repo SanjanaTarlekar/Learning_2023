@@ -13,7 +13,5 @@ int main()
     else
         printf("Number is greater than 100\n");
 
-    printf("\n\tCoding is Fun\n");
-    
     return 0;
 }
