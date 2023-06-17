@@ -2,8 +2,7 @@
 
 int main()
 {
-    printf("\n\ - Best place to learn\n");
-
+   
     int number;
     printf("Please enter a number:\n");
     scanf("%d",&number);
