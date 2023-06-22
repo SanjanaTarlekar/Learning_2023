@@ -1,0 +1,512 @@
+Day 5
+L1
+1. Assume User will be providing input in the form of a string as show below. 
+Write a function to parse the string and initialize an array of structures. 
+
+Example String : "1001 Aron 100.00" 
+Example Structure : 
+    struct Student{
+        int rollno;
+        char name[20];
+        float marks;
+    };
+
+Note: User must be able define the no. of inputs/size of the array during runtime.
+Ans-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Student{
+    int rollno;
+    char name[20];
+    float marks;
+};
+
+void parseAndInitialize(char* input, struct Student* students, int numStudents) {
+    char* token;
+    int count = 0;
+
+   
+    token = strtok(input, " ");
+
+    while (token != NULL && count < numStudents) {
+        
+        students[count].rollno = atoi(token);
+        
+        
+        token = strtok(NULL, " ");
+        strncpy(students[count].name, token, sizeof(students[count].name) - 1);
+        students[count].name[sizeof(students[count].name) - 1] = '\0';
+
+        token = strtok(NULL, " ");
+        students[count].marks = atof(token);
+
+        token = strtok(NULL, " ");
+        count++;
+    }
+}
+
+int main() {
+    int numStudents;
+    printf("Enter the number of students: ");
+    scanf("%d", &numStudents);
+    getchar();  // Clear the newline character from the input buffer
+
+    struct Student* students = (struct Student*)malloc(numStudents * sizeof(struct Student));
+    if (students == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    char input[100];
+    printf("Enter the input string: ");
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';  
+    parseAndInitialize(input, students, numStudents);
+
+    printf("\nInitialized structures:\n");
+    for (int i = 0; i < numStudents; i++) {
+        printf("Roll No: %d\n", students[i].rollno);
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: %.2f\n\n", students[i].marks);
+    }
+
+    free(students);
+
+    return 0;
+}
+
+2.Write a function to initialize all members in the above array of structures
+Ans-
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    int rollno;
+    char name[20];
+    float marks;
+};
+
+void initializeStructures(struct Student* students, int numStudents) {
+    for (int i = 0; i < numStudents; i++) {
+        students[i].rollno = 0;
+        strcpy(students[i].name, "");
+        students[i].marks = 0.0;
+    }
+}
+
+int main() {
+    int numStudents;
+    printf("Enter the number of students: ");
+    scanf("%d", &numStudents);
+    getchar(); 
+    struct Student students[numStudents];
+    
+    initializeStructures(students, numStudents);
+
+    printf("\nInitialized structures:\n");
+    for (int i = 0; i < numStudents; i++) {
+        printf("Roll No: %d\n", students[i].rollno);
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: %.2f\n\n", students[i].marks);
+    }
+
+    return 0;
+}
+
+3.Write a function to display all members in the above array of structures
+Ans-
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    int rollno;
+    char name[20];
+    float marks;
+};
+
+void displayStructures(struct Student* students, int numStudents) {
+    for (int i = 0; i < numStudents; i++) {
+        printf("Student %d:\n", i + 1);
+        printf("Roll No: %d\n", students[i].rollno);
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: %.2f\n\n", students[i].marks);
+    }
+}
+
+int main() {
+    int numStudents;
+    printf("Enter the number of students: ");
+    scanf("%d", &numStudents);
+    getchar(); 
+    struct Student students[numStudents];
+  
+    displayStructures(students, numStudents);
+
+    return 0;
+}
+
+4.Write a function to sort the array of structures in descending order based on marks 
+Ans-
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    int rollno;
+    char name[20];
+    float marks;
+};
+
+void sortStructures(struct Student* students, int numStudents) {
+    struct Student temp;
+
+    for (int i = 0; i < numStudents - 1; i++) {
+        for (int j = 0; j < numStudents - i - 1; j++) {
+            if (students[j].marks < students[j + 1].marks) {
+                // Swap the structures
+                temp = students[j];
+                students[j] = students[j + 1];
+                students[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int numStudents;
+    printf("Enter the number of students: ");
+    scanf("%d", &numStudents);
+    getchar();  
+
+    struct Student students[numStudents];
+    sortStructures(students, numStudents);
+
+    printf("\nSorted structures in descending order of marks:\n");
+    for (int i = 0; i < numStudents; i++) {
+        printf("Student %d:\n", i + 1);
+        printf("Roll No: %d\n", students[i].rollno);
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: %.2f\n\n", students[i].marks);
+    }
+
+    return 0;
+}
+
+5.Write a function to perform a search operation on the array of structures based on name of the student
+Ans-
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    int rollno;
+    char name[20];
+    float marks;
+};
+
+void searchByName(struct Student* students, int numStudents, const char* searchName) {
+    int found = 0;
+
+    for (int i = 0; i < numStudents; i++) {
+        if (strcmp(students[i].name, searchName) == 0) {
+            printf("Student Found!\n");
+            printf("Roll No: %d\n", students[i].rollno);
+            printf("Name: %s\n", students[i].name);
+            printf("Marks: %.2f\n\n", students[i].marks);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Student not found.\n");
+    }
+}
+
+int main() {
+    int numStudents;
+    printf("Enter the number of students: ");
+    scanf("%d", &numStudents);
+    getchar();  
+    struct Student students[numStudents];
+
+    char searchName[20];
+    printf("Enter the name to search: ");
+    fgets(searchName, sizeof(searchName), stdin);
+    searchName[strcspn(searchName, "\n")] = '\0';  
+
+    searchByName(students, numStudents, searchName);
+
+    return 0;
+}
+
+L2
+
+1. Write a function to add a member at the end of the above array of structures
+Note : Code must use Dynamic Memory concept
+Ans-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Student {
+    int rollno;
+    char name[20];
+    float marks;
+};
+
+void addMember(struct Student** students, int* numStudents) {
+   
+    *numStudents += 1;
+    struct Student* temp = (struct Student*)realloc(*students, (*numStudents) * sizeof(struct Student));
+
+    if (temp == NULL) {
+        printf("Memory allocation failed.\n");
+        return;
+    }
+
+    *students = temp;
+
+  
+    printf("Enter the details for the new member:\n");
+    printf("Roll No: ");
+    scanf("%d", &(*students)[*numStudents - 1].rollno);
+    getchar();  // Clear the newline character from the input buffer
+
+    printf("Name: ");
+    fgets((*students)[*numStudents - 1].name, sizeof((*students)[*numStudents - 1].name), stdin);
+    (*students)[*numStudents - 1].name[strcspn((*students)[*numStudents - 1].name, "\n")] = '\0';  
+
+    printf("Marks: ");
+    scanf("%f", &(*students)[*numStudents - 1].marks);
+    getchar();  // Clear the newline character from the input buffer
+}
+
+int main() {
+    int numStudents;
+    printf("Enter the number of students: ");
+    scanf("%d", &numStudents);
+    getchar();  // Clear the newline character from the input buffer
+
+    struct Student* students = (struct Student*)malloc(numStudents * sizeof(struct Student));
+    if (students == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    addMember(&students, &numStudents);
+
+   
+    printf("\nUpdated array of structures:\n");
+    for (int i = 0; i < numStudents; i++) {
+        printf("Student %d:\n", i + 1);
+        printf("Roll No: %d\n", students[i].rollno);
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: %.2f\n\n", students[i].marks);
+    }
+
+    // Free the allocated memory
+    free(students);
+
+    return 0;
+}
+
+2.Write a function to delete a member at the start of the above array of structures
+Note : Code must use Dynamic Memory concept
+Ans-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Student {
+    int rollno;
+    char name[20];
+    float marks;
+};
+
+void deleteMember(struct Student** students, int* numStudents) {
+    
+    if (*numStudents <= 0) {
+        printf("No members to delete.\n");
+        return;
+    }
+
+    for (int i = 0; i < *numStudents - 1; i++) {
+        (*students)[i] = (*students)[i + 1];
+    }
+
+    *numStudents -= 1;
+    struct Student* temp = (struct Student*)realloc(*students, (*numStudents) * sizeof(struct Student));
+
+    if (temp == NULL) {
+        printf("Memory allocation failed.\n");
+        return;
+    }
+
+    *students = temp;
+}
+
+int main() {
+    int numStudents;
+    printf("Enter the number of students: ");
+    scanf("%d", &numStudents);
+    getchar(); 
+
+    struct Student* students = (struct Student*)malloc(numStudents * sizeof(struct Student));
+    if (students == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+    deleteMember(&students, &numStudents);
+
+    
+    printf("\nUpdated array of structures:\n");
+    for (int i = 0; i < numStudents; i++) {
+        printf("Student %d:\n", i + 1);
+        printf("Roll No: %d\n", students[i].rollno);
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: %.2f\n\n", students[i].marks);
+    }
+
+    free(students);
+
+    return 0;
+}
+
+3.Write a function to swap 2 members in different indexes (based on user input) in the above array of structures
+Ans-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Student {
+    int rollno;
+    char name[20];
+    float marks;
+};
+
+void swapMembers(struct Student* students, int index1, int index2) {
+   
+    struct Student temp = students[index1];
+    students[index1] = students[index2];
+    students[index2] = temp;
+}
+
+int main() {
+    int numStudents;
+    printf("Enter the number of students: ");
+    scanf("%d", &numStudents);
+    getchar();  
+
+    struct Student* students = (struct Student*)malloc(numStudents * sizeof(struct Student));
+    if (students == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+    printf("Original array of structures:\n");
+    for (int i = 0; i < numStudents; i++) {
+        printf("Student %d:\n", i + 1);
+        printf("Roll No: %d\n", students[i].rollno);
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: %.2f\n\n", students[i].marks);
+    }
+
+    int index1, index2;
+    printf("Enter the indexes of the members to swap (0 to %d): ", numStudents - 1);
+    scanf("%d %d", &index1, &index2);
+    getchar();  
+
+    if (index1 < 0 || index1 >= numStudents || index2 < 0 || index2 >= numStudents) {
+        printf("Invalid indexes.\n");
+    } else {
+      
+        swapMembers(students, index1, index2);
+        printf("\nSwapped array of structures:\n");
+        for (int i = 0; i < numStudents; i++) {
+            printf("Student %d:\n", i + 1);
+            printf("Roll No: %d\n", students[i].rollno);
+            printf("Name: %s\n", students[i].name);
+            printf("Marks: %.2f\n\n", students[i].marks);
+        }
+    }
+
+    free(students);
+
+    return 0;
+}
+
+4.Write a function to rotate the above array of structures by K positions
+Ans-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Student {
+    int rollno;
+    char name[20];
+    float marks;
+};
+
+void rotateArray(struct Student* students, int numStudents, int k) {
+   
+    k = k % numStudents;
+    if (k < 0) {
+        k = numStudents + k;
+    }
+
+
+    struct Student* temp = (struct Student*)malloc(k * sizeof(struct Student));
+    if (temp == NULL) {
+        printf("Memory allocation failed.\n");
+        return;
+    }
+
+
+    memcpy(temp, &students[numStudents - k], k * sizeof(struct Student));
+
+    memmove(&students[k], &students[0], (numStudents - k) * sizeof(struct Student));
+
+    memcpy(&students[0], temp, k * sizeof(struct Student));
+
+    free(temp);
+}
+
+int main() {
+    int numStudents;
+    printf("Enter the number of students: ");
+    scanf("%d", &numStudents);
+    getchar(); 
+
+    struct Student* students = (struct Student*)malloc(numStudents * sizeof(struct Student));
+    if (students == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    printf("Original array of structures:\n");
+    for (int i = 0; i < numStudents; i++) {
+        printf("Student %d:\n", i + 1);
+        printf("Roll No: %d\n", students[i].rollno);
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: %.2f\n\n", students[i].marks);
+    }
+
+    int k;
+    printf("Enter the number of positions to rotate the array: ");
+    scanf("%d", &k);
+
+
+    rotateArray(students, numStudents, k);
+
+    printf("\nRotated array of structures:\n");
+    for (int i = 0; i < numStudents; i++) {
+        printf("Student %d:\n", i + 1);
+        printf("Roll No: %d\n", students[i].rollno);
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: %.2f\n\n", students[i].marks);
+    }
+
+    free(students);
+
+    return 0;
+}
