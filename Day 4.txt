@@ -1,0 +1,159 @@
+Day 4
+
+1.
+#include <stdio.h>
+
+void sum_and_average(int *array, int size, int *sum, float *average) {
+  *sum = 0;
+  for (int i = 0; i < size; i++) {
+    *sum += array[i];
+  }
+  *average = (float)*sum / size;
+}
+
+int main() {
+  int array[] = {12, 84, 20, 36, 64, 56, 72, 10, 45, 90};
+  int sum;
+  float average;
+  
+  sum_and_average(array, sizeof(array) / sizeof(int), &sum, &average);
+  
+  printf("Sum: %d\n", sum);
+  printf("Average: %.2f\n", average);
+  
+  return 0;
+}
+
+2.
+#include <stdio.h>
+
+void min_and_max(int *array, int size, int *min, int *max) {
+  *min = array[0];
+  *max = array[0];
+  
+  for (int i = 1; i < size; i++) {
+    if (array[i] < *min) {
+      *min = array[i];
+    } 
+    else if (array[i] > *max) {
+      *max = array[i];
+    }
+  }
+}
+
+int main() {
+  int array[] = {64, 84, 20, 36, 12, 90, 72, 10, 45, 56};
+  int min, max;
+  
+  min_and_max(array, sizeof(array) / sizeof(int), &min, &max);
+  
+  printf("Min: %d\n", min);
+  printf("Max: %d\n", max);
+  
+  return 0;
+}
+
+3.
+#include <stdio.h>
+
+void reverse_array(int *array, int size) {
+  int i = 0;
+  int j = size - 1;
+  while (i < j) {
+    int temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+    i++;
+    j--;
+  }
+}
+
+int main() {
+  int array[] = {64, 84, 20, 36, 12, 90, 72, 10, 45, 56};
+  int size = sizeof(array) / sizeof(int);
+  printf("Original Array: ");
+  for (int i = 0; i < size; i++) {
+    printf("%d ", array[i]);
+  }
+  printf("\n");
+
+  reverse_array(array, size);
+
+  printf("Reversed Array: ");
+  for (int i = 0; i < size; i++) {
+    printf("%d ", array[i]);
+  }
+  printf("\n");
+
+  return 0;
+}
+
+4.
+#include <stdio.h>
+
+int sum_of_even_elements(int *array, int size) {
+  int sum = 0;
+  for (int i = 0; i < size; i++) {
+    if (array[i] % 2 == 0) {
+      sum += array[i];
+    }
+  }
+  return sum;
+}
+
+int sum_of_odd_elements(int *array, int size) {
+  int sum = 0;
+  for (int i = 0; i < size; i++) {
+    if (array[i] % 2 != 0) {
+      sum += array[i];
+    }
+  }
+  return sum;
+}
+
+int main() {
+  int array[] = {64, 84, 21, 36, 17, 90, 77, 10, 48, 55};
+  int size = sizeof(array) / sizeof(int);
+  int sum_of_even = sum_of_even_elements(array, size);
+  int sum_of_odd = sum_of_odd_elements(array, size);
+  int difference = sum_of_even - sum_of_odd;
+  
+  printf("Sum of even elements: %d\n", sum_of_even);
+  printf("Sum of odd elements: %d\n", sum_of_odd);
+  printf("Difference between even and odd elements: %d\n", difference);
+  
+  return 0;
+}
+
+5.
+#include <stdio.h>
+
+int sum_of_even_indexed_elements(int *array, int size) {
+  int sum = 0;
+  for (int i = 0; i < size; i += 2) {
+    sum += array[i];
+  }
+  return sum;
+}
+
+int sum_of_odd_indexed_elements(int *array, int size) {
+  int sum = 0;
+  for (int i = 1; i < size; i += 2) {
+    sum += array[i];
+  }
+  return sum;
+}
+
+int main() {
+  int array[] = {64, 84, 21, 36, 17, 90, 77, 10, 48, 55};
+  int size = sizeof(array) / sizeof(int);
+  int sum_of_even_indexed = sum_of_even_indexed_elements(array, size);
+  int sum_of_odd_indexed = sum_of_odd_indexed_elements(array, size);
+  int difference = sum_of_even_indexed - sum_of_odd_indexed;
+  
+  printf("Sum of even indexed elements: %d\n", sum_of_even_indexed);
+  printf("Sum of odd indexed elements: %d\n", sum_of_odd_indexed);
+  printf("Difference between even and odd indexed elements: %d\n", difference);
+  
+  return 0;
+}
