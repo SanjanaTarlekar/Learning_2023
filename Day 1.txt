@@ -1,6 +1,446 @@
-#include <stdio.h>    
-int main()            
-{
-    printf("Hello World");
+Day 1
+Level 1
+1. Write a function to find biggest of 2 numbers using 
+    - if else
+    - ternary operator
+Ans - 
+
+#include <stdio.h>
+ //declaring function for returning the biggest number between two numbers
+int findMaxUsingIfElse(int a, int b) {
+    if (a > b) {
+        return a;
+    } else {
+        return b;
+    }
+}
+// declaring the function for finding the biggest number between two numbers
+int findMaxUsingTernaryOperator(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+int main() {
+    int num1, num2;
+    printf("Enter the first number: ");
+    scanf("%d", &num1);
+    printf("Enter the second number: ");
+    scanf("%d", &num2);
+
+    int max1 = findMaxUsingIfElse(num1, num2);
+    int max2 = findMaxUsingTernaryOperator(num1, num2);
+
+    printf("Using if-else: The maximum of %d and %d is %d\n", num1, num2, max1);
+    printf("Using ternary operator: The maximum of %d and %d is %d\n", num1, num2, max2);
+
     return 0;
 }
+
+2. Write a program to print the grade of the given student using if else if block
+    - 90 to 100 -> "Grade A"
+    - 75 to 89 -> "Grade B"
+    - 60 to 74 -> "Grade C"
+    - 50 to 59 -> "Grade D"
+    - 0 to 49 -> "Grade F"
+Ans - 
+
+#include <stdio.h>
+/*declaring function printGrade that takes a score as input and uses an if-else if block
+ to determine and print the corresponding grade based on the score range.*/ 
+void printGrade(int score) {
+    if (score >= 90 && score <= 100) {
+        printf("Grade A\n");
+    } else if (score >= 75 && score <= 89) {
+        printf("Grade B\n");
+    } else if (score >= 60 && score <= 74) {
+        printf("Grade C\n");
+    } else if (score >= 50 && score <= 59) {
+        printf("Grade D\n");
+    } else if (score >= 0 && score <= 49) {
+        printf("Grade F\n");
+    } else {
+        printf("Invalid score\n");
+    }
+}
+
+int main() {
+    int score;
+    printf("Enter the score: ");
+    scanf("%d", &score);
+    // calling a function by call by value
+    printGrade(score);
+
+    return 0;
+}
+
+3. Write a program to read the 
+    - Roll No
+    - Name (Note, you should read full name of the student including initials)
+    - Marks of Physics, Math and Chemistry
+     Calculate the total, percentage and print the summary.
+Ans - 
+
+#include <stdio.h>
+int main() {
+    // declaring variables
+    int rollNo;
+    char name[50];
+    float physicsMarks, mathMarks, chemistryMarks;
+    float totalMarks, percentage;
+
+    printf("Enter the Roll No: ");
+    scanf("%d", &rollNo);
+
+    printf("Enter the Name: ");
+    scanf(" %[^\n]", name);
+
+    printf("Enter the Marks of Physics: ");
+    scanf("%f", &physicsMarks);
+
+    printf("Enter the Marks of Math: ");
+    scanf("%f", &mathMarks);
+
+    printf("Enter the Marks of Chemistry: ");
+    scanf("%f", &chemistryMarks);
+
+    // Calculate total marks and percentage
+    totalMarks = physicsMarks + mathMarks + chemistryMarks;
+    percentage = (totalMarks / 300.0) * 100.0;
+
+    // Print the summary for user input using scanf
+    printf("\nSummary:\n");
+    printf("Roll No: %d\n", rollNo);
+    printf("Name: %s\n", name);
+    printf("Physics Marks: %.2f\n", physicsMarks);
+    printf("Math Marks: %.2f\n", mathMarks);
+    printf("Chemistry Marks: %.2f\n", chemistryMarks);
+    printf("Total Marks: %.2f\n", totalMarks);
+    printf("Percentage: %.2f%%\n", percentage);
+
+    return 0;
+}
+
+4. Write a simple calculator program which should accept inputs in the same order.
+    - Operand 1
+    - Operator
+    - Operand 2
+The order of scan should be same, for example, you should first scan in the following order.
+printf("Enter Number1: );
+Scan the first number form the user.
+printf("Enter the operator: );
+Scan the operator from the user.
+printf("Enter Number2: );
+Scan the second number form the user.
+
+ Ans - 
+
+#include <stdio.h>
+int main() {
+    float num1, num2;
+    char operator;
+    float result;
+    // enter operand 1
+    printf("Enter Number1: ");
+    scanf("%f", &num1);
+    //enter operater
+    printf("Enter the operator: ");
+    scanf(" %c", &operator);
+    //enter operand 2
+    printf("Enter Number2: ");
+    scanf("%f", &num2);
+    // switch case statement for calculator
+    switch (operator) {
+        case '+':
+            result = num1 + num2;
+            printf("Result: %.2f\n", result);
+            break;
+        case '-':
+            result = num1 - num2;
+            printf("Result: %.2f\n", result);
+            break;
+        case '*':
+            result = num1 * num2;
+            printf("Result: %.2f\n", result);
+            break;
+        case '/':
+            if (num2 != 0) {
+                result = num1 / num2;
+                printf("Result: %.2f\n", result);
+            } else {
+                printf("Error: Division by zero\n");
+            }
+            break;
+        default:
+            printf("Error: Invalid operator\n");
+    }
+
+    return 0;
+}
+
+5. Write a function to accept an integer (32 bits) and operation type to do the following and return the result to main function.
+    - Set 1st bit, if operation type is 1
+    - Clear 31st bit, if operation type is 2
+    - Toggle 16th bit, if operation type is 3
+   You can consider the below function prototype,
+    - bit_operations(int num, int oper_type);
+
+Ans - 
+
+#include <stdio.h>
+int bit_operations(int num, int oper_type) {
+    int result = num;
+
+    switch (oper_type) {
+        case 1:
+            result |= (1 << 0);   // Set 1st bit if operation type is 1
+            break;
+        case 2:
+            result &= ~(1 << 31);  // Clear 31st bit if operation type is 2
+            break;
+        case 3:
+            result ^= (1 << 15);  // Toggle 16th bit if operation type is 3
+            break;
+        default:
+            printf("Error: Invalid operation type\n");  //invalid operation for invalid user oper_type
+            break;
+    }
+
+    return result;
+}
+
+int main() {
+    int num, oper_type;
+    printf("Enter an integer: ");
+    scanf("%d", &num);
+    printf("Enter operation type (1, 2, or 3): ");
+    scanf("%d", &oper_type);
+
+    int result = bit_operations(num, oper_type);
+    printf("Result: %d\n", result);
+
+    return 0;
+}
+
+LEVEL 2
+
+1. Write a function to return the greatest of 3 number using if else if.
+Ans - 
+#include <stdio.h>
+
+int findGreatest(int num1, int num2, int num3) {
+    int greatest = num1;
+
+    if (num2 > greatest) {
+        greatest = num2;
+    }
+    else if (num3 > greatest) {
+        greatest = num3;
+    }
+
+    return greatest;
+}
+
+int main() {
+    int num1, num2, num3;
+    
+    printf("Enter three numbers: ");
+    scanf("%d %d %d", &num1, &num2, &num3);
+
+    int result = findGreatest(num1, num2, num3);
+    printf("The greatest number is: %d\n", result);
+
+    return 0;
+}
+
+2. Write a function to return the grade of the given student using switch case statements
+90 to 100 -> 'A'
+75 to 89 -> 'B'
+60 to 74 -> 'C'
+50 to 59 -> 'D'
+36 to 49 -> 'E'
+0 to 35 -> 'F'
+
+In main check the return value and print the below
+65 -> "Grade A"
+66 -> "Grade B"
+67 -> "Grade C"
+68 -> "Grade D"
+69 -> "Grade E"
+70 -> "Grade F"
+Ans - 
+
+#include <stdio.h>
+char calculateGrade(int score) {
+    char grade;
+
+    switch (score) {
+        case 90 ... 100:
+            grade = 'A';
+            break;
+        case 75 ... 89:
+            grade = 'B';
+            break;
+        case 60 ... 74:
+            grade = 'C';
+            break;
+        case 50 ... 59:
+            grade = 'D';
+            break;
+        case 36 ... 49:
+            grade = 'E';
+            break;
+        case 0 ... 35:
+            grade = 'F';
+            break;
+        default:
+            grade = 'X';  // Invalid score
+            break;
+    }
+    return grade;
+}
+
+int main() {
+    int score;
+    
+    printf("Enter the student's score: ");
+    scanf("%d", &score);
+
+    char grade = calculateGrade(score);
+
+    printf("Grade ");
+
+    switch (grade) {
+        case 'A':
+            printf("A\n");
+            break;
+        case 'B':
+            printf("B\n");
+            break;
+        case 'C':
+            printf("C\n");
+            break;
+        case 'D':
+            printf("D\n");
+            break;
+        case 'E':
+            printf("E\n");
+            break;
+        case 'F':
+            printf("F\n");
+            break;
+        default:
+            printf("Invalid score\n");
+            break;
+    }
+
+    return 0;
+}
+
+3. Write a function to find if a give character is vowel using switch case statements, 
+    - If vowel, return 1
+    - If not vowel, return 0;
+
+In main print,
+"Vowel" if return value is 1
+"Not Vowel" if return value is 1
+Ans - 
+
+#include <stdio.h>
+
+int isVowel(char ch) {
+    int isVowel = 0;
+
+    switch (ch) {
+        case 'a':
+        case 'A':
+        case 'e':
+        case 'E':
+        case 'i':
+        case 'I':
+        case 'o':
+        case 'O':
+        case 'u':
+        case 'U':
+            isVowel = 1;
+            break;
+        default:
+            isVowel = 0;
+            break;
+    }
+
+    return isVowel;
+}
+
+int main() {
+    char ch;
+    
+    printf("Enter a character: ");
+    scanf(" %c", &ch);
+
+    int result = isVowel(ch);
+
+    if (result == 1) {
+        printf("Vowel\n");
+    } else {
+        printf("Not Vowel\n");
+    }
+
+    return 0;
+}
+
+4. Write a function to find the type of the character passed
+    - 'A' to 'Z', return 1
+    - 'a; to 'z', return 2
+    - '0' to '9', return 3
+    - Any Other printable symbols, return 4
+    - Non printable symbols, return 5 
+Ans - 
+
+#include <stdio.h>
+#include <ctype.h>
+
+int findCharType(char ch) {
+    if (isupper(ch)) {
+        return 1;
+    } else if (islower(ch)) {
+        return 2;
+    } else if (isdigit(ch)) {
+        return 3;
+    } else if (isprint(ch)) {
+        return 4;
+    } else {
+        return 5;
+    }
+}
+
+int main() {
+    char ch;
+    
+    printf("Enter a character: ");
+    scanf(" %c", &ch);
+
+    int result = findCharType(ch);
+
+    switch (result) {
+        case 1:
+            printf("Character type: Uppercase Letter\n");
+            break;
+        case 2:
+            printf("Character type: Lowercase Letter\n");
+            break;
+        case 3:
+            printf("Character type: Digit\n");
+            break;
+        case 4:
+            printf("Character type: Printable Symbol\n");
+            break;
+        case 5:
+            printf("Character type: Non-Printable Symbol\n");
+            break;
+        default:
+            printf("Invalid character\n");
+            break;
+    }
+
+    return 0;
+}
+
